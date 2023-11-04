@@ -45,6 +45,7 @@
 .footer {
   background-color: #f8f8f8;
   padding: 20px 40px;
+  margin-top: 20px;
   color: #333;
   display: flex;
   flex-wrap: wrap;
@@ -80,6 +81,137 @@
 .footer-section a:hover {
   color: #0077cc;
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  background-color: #fff;
+  max-width: 800px;
+  margin: 50px auto;
+  border-radius: 10px;
+}
+
+.subtitle {
+  font-size: 24px;
+  margin-bottom: 40px;
+}
+.options {
+  display: flex;
+  flex-direction: row;
+}
+.option-card {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  padding: 30px;
+  margin: 10px;
+  border: 1px solid #e7e7e7;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.option-card:hover {
+  background-color: #f8f8f8;
+}
+
+.option-title {
+  font-size: 20px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.option-description {
+  font-size: 12px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.option-btn {
+  background-color: #0077cc;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.option-btn:hover {
+  background-color: #005fa3;
+}
+
+.care-question {
+  font-size: 1.5rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.care-options {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.care-option {
+  background-color: #f7f7f7;
+  border: 1px solid #dcdcdc;
+  border-radius: 5px;
+  padding: 1rem 2rem;
+  margin: 0.5rem;
+  font-size: 1rem;
+  color: #333;
+  cursor: pointer;
+  text-align: left;
+  width: 90%; /* Adjust width as per design requirement */
+  max-width: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.care-option i {
+  margin-right: 1rem;
+}
+
+.care-option:hover {
+  background-color: #e8e8e8;
+}
+
+.care-next {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem 2rem;
+  margin-top: 2rem;
+  cursor: pointer;
+  width: 90%; /* Adjust width as per design requirement */
+  max-width: 300px;
+}
+
+.care-next:hover {
+  background-color: #003d82;
+}
+
+.care-option.selected,
+.care-option:active, /* Added for immediate feedback on click */
+.care-option:focus { /* Added for keyboard navigation */
+  background-color: #0056b3;
+  color: white;
+  border-color: #0056b3;
+}
+
+/* Add :not(.selected):hover to prevent changing background on hover for selected button */
+.care-option:not(.selected):hover {
+  background-color: #e8e8e8;
+}
+
+
+
 
 
 

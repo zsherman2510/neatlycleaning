@@ -1,8 +1,29 @@
 const initialCustomerState = {
-  personalDetails: null,
-  account: null,
-  loading: false,
-  error: null
+  personalDetails: {
+    firstName: null,
+    lastName: null,
+    email: null,
+    phoneNumber: null
+  },
+  care: [{
+    type: null,
+    frequency: null,  
+  }],
+  home: [
+    {
+        street: null,
+        zipcode: null,
+        bedrooms: null,
+        bathrooms: null,
+        supplies: null,
+        equipment: null,
+        task: [],
+        
+    }
+  ],
+    
+  
+
 };
 
  const customerReducer = (state = initialCustomerState, action: any) => {
