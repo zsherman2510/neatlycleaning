@@ -1,5 +1,3 @@
-import { UPDATE_CLEANER_PERSONAL_DATA, UPDATE_CLEANER_DETAILS, REGISTER_USER } from "../actions";
-
 const initialCleanerState = {
   personalDetails: {
     username: null,
@@ -25,7 +23,7 @@ const initialCleanerState = {
 
 export const cleanerReducer = (state = initialCleanerState, action: any) => {
   switch (action.type) {
-    case UPDATE_CLEANER_PERSONAL_DATA:
+    case "UPDATE_CLEANER_PERSONAL_DATA":
       return {
         ...state,
         personalDetails: {
@@ -33,7 +31,7 @@ export const cleanerReducer = (state = initialCleanerState, action: any) => {
           ...action.payload,
         },
       };
-    case UPDATE_CLEANER_DETAILS:
+    case "UPDATE_CLEANER_DETAILS":
       return {
         ...state,
         cleaningDetails: {
@@ -57,7 +55,7 @@ export const cleanerReducer = (state = initialCleanerState, action: any) => {
         ...state,
         loading: true,
       };
-    case REGISTER_USER:
+    case "REGISTER_USER":
       return {
         ...state,
         personalDetails: {

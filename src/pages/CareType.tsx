@@ -1,14 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { selectCareType } from '../redux/reducers/customerReducer';
 
 const CareType: React.FC = () => {
   const [selected, setSelected] = useState<string>('');
+  const [frequency, setFrequency] = useState<string>('');
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleSelection = (key: any) => {
     setSelected(key);
   }
 
+  const handleFrequencyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setFrequency(event.target.value);
+  }
+
   const handleNext = () => {
+    if (!selected) {
+      alert('Please select a care type.');
+      return;
+    }
+
+    dispatch(selectCareType(selected, frequency));
     navigate('/frequency')
   }
   const options = [
@@ -18,6 +32,8 @@ const CareType: React.FC = () => {
     { key: 'pet', text: 'Pet care' },
     { key: 'tutor', text: 'Tutoring' }
   ];
+
+  const frequencies = ["one time", "every week", "every 2 weeks", "monthly"];
 
   return (
     <>
@@ -36,7 +52,23 @@ const CareType: React.FC = () => {
         ))}
       </div>
 
-      <button className="care-next">Next</button>
+      <div className="frequency-selection">
+        <h2>How often do you need care?</h2>
+        {frequencies.map(freq => (
+          <label key={freq}>
+            <input
+              type="radio"
+              name="frequency"
+              value={freq}
+              checked={frequency === freq}
+              onChange={handleFrequencyChange}
+            />
+            {freq}
+          </label>
+        ))}
+      </div>
+
+      <button className="care-next" onClick={handleNext}>Next</button>
     </>
   )
 }

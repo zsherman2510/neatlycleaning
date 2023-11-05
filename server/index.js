@@ -10,6 +10,7 @@ const app = express();
 app.use(cors());
 app.use(bodyParser.json());
 
+console.log('DB Dialect:', process.env.DB_DIALECT);
 // Initialize Sequelize with the configuration from config.json
 const sequelize = new Sequelize({
   username: process.env.DB_USERNAME,
@@ -18,6 +19,7 @@ const sequelize = new Sequelize({
   host: process.env.DB_HOST,
   dialect: process.env.DB_DIALECT,
 });
+
 
 // Test the connection
 sequelize.authenticate()
