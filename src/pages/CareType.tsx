@@ -23,7 +23,7 @@ const CareType: React.FC = () => {
     }
 
     dispatch(selectCareType(selected, frequency));
-    navigate('/frequency')
+    navigate(`/tasks?careType=${selected}`);
   }
   const options = [
     { key: 'child', text: 'Child care' },

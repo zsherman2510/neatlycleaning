@@ -209,6 +209,68 @@
 .care-option:not(.selected):hover {
   background-color: #e8e8e8;
 }
+/* Tasks.css */
+.tasks-container {
+  margin: 0 auto;
+}
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 25px auto;
+  width: 400px;
+  text-align: left;
+}
+
+.task-label {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.task-text {
+  flex-grow: 1;
+}
+
+.task-checkbox {
+  opacity: 0;
+  position: absolute;
+}
+
+.custom-checkbox {
+  width: 20px; /* Your specific width */
+  height: 20px;
+  border: 2px solid #ccc; /* Customizable border color */
+  display: inline-block;
+  margin-left: 10px; /* Space between the label and custom checkbox */
+  cursor: pointer;
+  position: relative;
+}
+
+/* Style for when checkbox is checked */
+.task-checkbox:checked + .custom-checkbox {
+  background-color: #0056b3; /* Customizable background color */
+  border-color: #0056b3; /* Customizable border color */
+}
+
+/* Optional: Add a checkmark when checked */
+.task-checkbox:checked + .custom-checkbox:after {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 2px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+/* Add any additional hover effects or visual cues for interaction */
+.custom-checkbox:hover {
+  border-color: #888; /* Color when hovering */
+}
+
 
 
 

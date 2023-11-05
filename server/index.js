@@ -42,5 +42,5 @@ app.get('/cleaners/register', (req, res) => {
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server is running on port ${PORT} and connected to ${process.env.DB_DATABASE}` );
 });
