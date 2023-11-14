@@ -212,6 +212,7 @@
 /* Tasks.css */
 .tasks-container {
   margin: 0 auto;
+  text-align: center;
 }
 .task-item {
   display: flex;
@@ -269,6 +270,10 @@
 /* Add any additional hover effects or visual cues for interaction */
 .custom-checkbox:hover {
   border-color: #888; /* Color when hovering */
+}
+
+.frequency-selection {
+  text-align: center;
 }
 
 

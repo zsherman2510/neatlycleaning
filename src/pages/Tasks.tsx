@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
-import { useLocation } from 'react-router-dom';
-
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addTask } from '../redux/reducers/customerReducer';
 
 type TasksByCareType = {
   [key: string]: string[];
@@ -10,6 +11,9 @@ const Tasks: React.FC = () => {
     // Maintain state for selected tasks
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
   const location = useLocation();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const searchParams = new URLSearchParams(location.search);
   const careType = searchParams.get('careType');
   console.log(careType, 'selectedcaretype')
@@ -57,6 +61,16 @@ const Tasks: React.FC = () => {
     }
   };
 
+  const handleNext = () => {
+    if (!selectedTasks) {
+      alert('Please select any tasks.');
+      return;
+    }
+
+    dispatch(addTask(selectedTasks));
+    navigate(`/user`);
+  }
+
   return (
     <div className="tasks-container">
       <div className="care-question">
@@ -79,6 +93,7 @@ const Tasks: React.FC = () => {
           </div>
         ))}
       </div>
+      <button className="care-next" onClick={handleNext}>Next</button>
     </div>
   );
   

@@ -98,9 +98,9 @@ export const updateHomeInfo = (index: number, info: any) => ({
   payload: { index, info },
 });
 
-export const addTask = (index: number, task: string) => ({
+export const addTask = (task: Array<string>) => ({
   type: ADD_TASK,
-  payload: { index, task },
+  payload: task  ,
 });
 
 export const removeTask = (homeIndex: number, taskIndex: number) => ({

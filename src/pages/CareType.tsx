@@ -66,9 +66,13 @@ const CareType: React.FC = () => {
             {freq}
           </label>
         ))}
+        <div>
+          <button className="care-next" onClick={handleNext}>Next</button>
+        </div>
+        
       </div>
 
-      <button className="care-next" onClick={handleNext}>Next</button>
+      
     </>
   )
 }
