@@ -278,6 +278,52 @@
 
 
 
+.care-question {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.creds-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px; /* Adjust the width as needed */
+  margin: auto;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-field {
+  width: 100%;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+.form-error {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.submit-btn {
+  background-color: #0056b3; /* Adjust the color to match the screenshot */
+  color: white;
+  padding: 15px 20px;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.submit-btn:hover {
+  background-color: #e55a5a; /* A slightly darker hue for hover effect */
+}
+
+/* Add any global styles or resets you might need */
 
 
 

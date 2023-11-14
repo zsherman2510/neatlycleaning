@@ -23,8 +23,7 @@ const initialCustomerState = {
         bathrooms: null,
         supplies: null,
         equipment: null,
-        tasks: [],
-        
+        tasks: [],  
     }
   ],
 };
@@ -83,9 +82,9 @@ const customerReducer = (state = initialCustomerState, action: any) => {
 };
 
 // Action creators
-export const updateCustomerPersonalDetails = (personalDetails: any) => ({
+export const updateCustomerPersonalDetails = (firstName: string, lastName: string, email: string, phoneNumber: string) => ({
   type: UPDATE_CUSTOMER_PERSONAL_DETAILS,
-  payload: personalDetails,
+  payload: { firstName, lastName, email, phoneNumber },
 });
 
 export const selectCareType = (type: string, frequency: string) => ({
