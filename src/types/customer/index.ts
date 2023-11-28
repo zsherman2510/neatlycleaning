@@ -1,4 +1,61 @@
 // FilterTypes.ts
+// Personal Details Interface
+export interface PersonalDetails {
+  firstName: string | null;
+  lastName: string | null;
+  email: string | null;
+  phoneNumber: string | null;
+  address: string | null;
+  // ... other personal details
+}
+
+// Job Interface
+export interface Job {
+  id: string;
+  customerId: string;
+  typeOfCare: string | null;
+  address: string | null;
+  jobStatus: string | null;
+  specialRequests: string | null;
+  careDetails: CareDetail[];
+  // ... other job-related fields
+}
+
+// Care Detail Interface
+export interface CareDetail {
+  id: string;
+  jobId: string;
+  frequency: string | null;
+  duration: number | null;
+  price: number | null;
+  tasks: string[];
+  
+  // ... other care detail fields
+}
+
+// Property Interface
+export interface Property {
+  id: string;
+  customerId: string;
+  address: string | null;
+  propertyType: string | null;
+  bedrooms: number | null;
+  bathrooms: number | null;
+  suppliesRequired: boolean | null;
+  equipmentRequired: boolean | null;
+  isPrimary: boolean | null;
+  // ... other property-related fields
+}
+
+// Customer State Interface
+export interface CustomerState {
+  personalDetails: PersonalDetails;
+  jobs: Job[];
+  properties: Property[];
+  tempJob: Job | null;
+}
+
+
 export interface PayRateFilter {
   min: number;
   max: number;
@@ -18,3 +75,5 @@ export interface Caregiver {
   rate: number;
   photoUrl: string;
 }
+
+

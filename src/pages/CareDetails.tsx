@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addTask } from '../redux/reducers/customerReducer';
+import { addJobTasks } from '../redux/reducers/customerReducer';
 
 type TasksByCareType = {
   [key: string]: string[];
@@ -16,7 +16,6 @@ const Tasks: React.FC = () => {
 
   const searchParams = new URLSearchParams(location.search);
   const careType = searchParams.get('careType');
-  console.log(careType, 'selectedcaretype')
 
   const tasksByCareType: TasksByCareType = {
     child: [
@@ -67,7 +66,7 @@ const Tasks: React.FC = () => {
       return;
     }
 
-    dispatch(addTask(selectedTasks));
+    dispatch(addJobTasks(selectedTasks));
     navigate(`/user`);
   }
 

@@ -1,32 +1,34 @@
-const UPDATE_CUSTOMER_PERSONAL_DETAILS = 'UPDATE_CUSTOMER_PERSONAL_DETAILS';
-const SELECT_CARE_TYPE = 'SELECT_CARE_TYPE';
-const UPDATE_HOME_INFO = 'UPDATE_HOME_INFO';
-const ADD_TASK = 'ADD_TASK';
-const REMOVE_TASK = 'REMOVE_TASK';
+import { CustomerState, PersonalDetails } from "../../types/customer";
 
-const initialCustomerState = {
+// Define Action Types
+const UPDATE_CUSTOMER_PERSONAL_DETAILS = 'UPDATE_CUSTOMER_PERSONAL_DETAILS';
+const ADD_JOB = 'ADD_JOB';
+const UPDATE_JOB = 'UPDATE_JOB';
+const UPDATE_CARE_DETAIL = 'UPDATE_CARE_DETAIL';
+const ADD_PROPERTY = 'ADD_PROPERTY';
+const UPDATE_PROPERTY_INFO = 'UPDATE_PROPERTY_INFO';
+const UPDATE_HOME_INFO = 'UPDATE_HOME_INFO';
+
+interface UpdateCustomerPersonalDetailsAction {
+  type: typeof UPDATE_CUSTOMER_PERSONAL_DETAILS;
+  payload: PersonalDetails;
+}
+// Define initial state
+const initialCustomerState: CustomerState = {
   personalDetails: {
     firstName: null,
     lastName: null,
     email: null,
-    phoneNumber: null
+    phoneNumber: null,
+    address: null
   },
-  care: [{
-    type: null,
-    frequency: null,  
-  }],
-  home: [
-    {
-        street: null,
-        zipcode: null,
-        bedrooms: null,
-        bathrooms: null,
-        supplies: null,
-        equipment: null,
-        tasks: [],  
-    }
-  ],
+  jobs: [],
+  properties: [],
+  tempJob: null
+  
 };
+
+
 
 // Define the reducer
 const customerReducer = (state = initialCustomerState, action: any) => {
@@ -36,45 +38,49 @@ const customerReducer = (state = initialCustomerState, action: any) => {
         ...state,
         personalDetails: { ...state.personalDetails, ...action.payload },
       };
-      case SELECT_CARE_TYPE:
+
+    case UPDATE_CARE_DETAIL:
+      return {
+        ...state,
+        tempJob: {
+          ...state.tempJob,
+          ...action.payload
+        } 
+      };
+      case "ADD_JOB_TASKS":
         return {
           ...state,
-          care: [{
-            type: action.payload.type,
-            frequency: action.payload.frequency
-          }],
+          tempJob: {
+            ...state.tempJob,
+            careDetails: {
+              ...state.tempJob?.careDetails,
+              tasks: action.payload
+            }
+          } 
         };
-      
-    case UPDATE_HOME_INFO:
+    case ADD_JOB:
+      return {
+        ...state, 
+        tempJob: {
+          ...state.tempJob,
+          typeOfCare: action.payload.type,
+          careDetails: {
+            ...state.tempJob?.careDetails,
+            frequency: action.payload.frequency
+          }
+        },
+      };
+    case UPDATE_JOB:
+      // Logic to update a job
+      break;
+    case ADD_PROPERTY:
       return {
         ...state,
-        home: state.home.map((item, index) =>
-          index === action.payload.index
-            ? { ...item, ...action.payload.info }
-            : item
-        ),
+        properties: [...state.properties, action.payload],
       };
-    case ADD_TASK:
-      return {
-        ...state,
-        home: state.home.map((item, index) =>
-          index === action.payload.index
-            ? { ...item, tasks: [...item.tasks, action.payload.task] }
-            : item
-        ),
-      };
-    case REMOVE_TASK:
-      return {
-        ...state,
-        home: state.home.map((item, index) =>
-          index === action.payload.homeIndex
-            ? {
-                ...item,
-                tasks: item.tasks.filter((_, taskIndex) => taskIndex !== action.payload.taskIndex),
-              }
-            : item
-        ),
-      };
+    case UPDATE_PROPERTY_INFO:
+      // Logic to update property information
+      break;
     // ... handle other customer-specific actions
     default:
       return state;
@@ -82,13 +88,15 @@ const customerReducer = (state = initialCustomerState, action: any) => {
 };
 
 // Action creators
-export const updateCustomerPersonalDetails = (firstName: string, lastName: string, email: string, phoneNumber: string) => ({
+export const updateCustomerPersonalDetails = (
+  personalDetails: PersonalDetails
+): UpdateCustomerPersonalDetailsAction => ({
   type: UPDATE_CUSTOMER_PERSONAL_DETAILS,
-  payload: { firstName, lastName, email, phoneNumber },
+  payload: personalDetails,
 });
 
-export const selectCareType = (type: string, frequency: string) => ({
-  type: SELECT_CARE_TYPE,
+export const addJob = (type: string, frequency: string) => ({
+  type: ADD_JOB,
   payload: { type, frequency },
 });
 
@@ -97,14 +105,16 @@ export const updateHomeInfo = (index: number, info: any) => ({
   payload: { index, info },
 });
 
-export const addTask = (task: Array<string>) => ({
-  type: ADD_TASK,
-  payload: task  ,
+export const updateCareDetails = (careDetails: any) => ({
+  type: UPDATE_CARE_DETAIL,
+  payload: careDetails
 });
 
-export const removeTask = (homeIndex: number, taskIndex: number) => ({
-  type: REMOVE_TASK,
-  payload: { homeIndex, taskIndex },
-});
+export const addJobTasks = (tasks: Array<string>) => ({
+  type: "ADD_JOB_TASKS",
+  payload: tasks
+})
+
+
 
 export default customerReducer;

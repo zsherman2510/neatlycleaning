@@ -6,7 +6,7 @@ import {
 import Layout from "./components/Layout";
 import SignUp from "./pages/SignUp";
 import CareType from "./pages/CareType";
-import Tasks from "./pages/Tasks";
+import Tasks from "./pages/CareDetails";
 import Creds from "./pages/Creds";
 import FindCare from "./pages/FindCare";
 import { Provider } from 'react-redux';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { selectCareType } from '../redux/reducers/customerReducer';
+import { addJob } from '../redux/reducers/customerReducer';
 
 const CareType: React.FC = () => {
   const [selected, setSelected] = useState<string>('');
@@ -22,7 +22,7 @@ const CareType: React.FC = () => {
       return;
     }
 
-    dispatch(selectCareType(selected, frequency));
+    dispatch(addJob(selected, frequency));
     navigate(`/tasks?careType=${selected}`);
   }
   const options = [
