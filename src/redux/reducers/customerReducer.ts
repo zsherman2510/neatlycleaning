@@ -1,4 +1,4 @@
-import { CustomerState, PersonalDetails } from "../../types/customer";
+import { CustomerState } from "../../types/customer";
 
 // Define Action Types
 const UPDATE_CUSTOMER_PERSONAL_DETAILS = 'UPDATE_CUSTOMER_PERSONAL_DETAILS';
@@ -9,10 +9,6 @@ const ADD_PROPERTY = 'ADD_PROPERTY';
 const UPDATE_PROPERTY_INFO = 'UPDATE_PROPERTY_INFO';
 const UPDATE_HOME_INFO = 'UPDATE_HOME_INFO';
 
-interface UpdateCustomerPersonalDetailsAction {
-  type: typeof UPDATE_CUSTOMER_PERSONAL_DETAILS;
-  payload: PersonalDetails;
-}
 // Define initial state
 const initialCustomerState: CustomerState = {
   personalDetails: {
@@ -88,9 +84,7 @@ const customerReducer = (state = initialCustomerState, action: any) => {
 };
 
 // Action creators
-export const updateCustomerPersonalDetails = (
-  personalDetails: PersonalDetails
-): UpdateCustomerPersonalDetailsAction => ({
+export const updateCustomerPersonalDetails = (personalDetails: any) => ({
   type: UPDATE_CUSTOMER_PERSONAL_DETAILS,
   payload: personalDetails,
 });

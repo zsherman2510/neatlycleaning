@@ -19,8 +19,15 @@ const Creds: React.FC = ({}: Props) => {
       return;
     }
     // Handle the submission logic here
+    const personalDetails = {
+      firstName,
+      lastName,
+      email,
+      phoneNumber
+    }
     // Reset form error on successful submission
-    dispatch(updateCustomerPersonalDetails(firstName, lastName, email, phoneNumber));
+
+    dispatch(updateCustomerPersonalDetails(personalDetails));
     setFormError('');
     navigate('/findCare');
   }
