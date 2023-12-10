@@ -1,12 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import cleanerReducer from './reducers/cleanerReducer';
-import customerReducer from './reducers/customerReducer';
+import createCustomerReducer from './reducers/createCustomerReducer';
 import logger from 'redux-logger'
 
 const store = configureStore({
   reducer: {
-    cleaner: cleanerReducer,
-    customer: customerReducer,
+    CreateAccountCleaner: cleanerReducer,
+    CreateAccountCustomer: createCustomerReducer,
 
   },
   // You can add middlewares here

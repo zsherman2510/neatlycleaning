@@ -1,4 +1,4 @@
-import { CustomerState } from "../../types/customer";
+import { CreateCustomerState } from "../../types/customer";
 
 // Define Action Types
 const UPDATE_CUSTOMER_PERSONAL_DETAILS = 'UPDATE_CUSTOMER_PERSONAL_DETAILS';
@@ -10,7 +10,7 @@ const UPDATE_PROPERTY_INFO = 'UPDATE_PROPERTY_INFO';
 const UPDATE_HOME_INFO = 'UPDATE_HOME_INFO';
 
 // Define initial state
-const initialCustomerState: CustomerState = {
+const initialCustomerState: CreateCustomerState = {
   personalDetails: {
     firstName: null,
     lastName: null,
@@ -18,16 +18,33 @@ const initialCustomerState: CustomerState = {
     phoneNumber: null,
     address: null
   },
-  jobs: [],
-  properties: [],
-  tempJob: null
+  job: {
+    id: null,
+    customerId: null,
+    typeOfCare: null,
+    address: null,
+    jobStatus: null,
+    specialRequests: null,
+    careDetails: []
+  },
+  property: {
+    id: null,
+    customerId: null,
+    address: null,
+    propertyType: null,
+    bedrooms: null,
+    bathrooms: null,
+    suppliesRequired: null,
+    equipmentRequired: null,
+    isPrimary: null
+  },
   
 };
 
 
 
 // Define the reducer
-const customerReducer = (state = initialCustomerState, action: any) => {
+const createCustomerReducer = (state = initialCustomerState, action: any) => {
   switch (action.type) {
     case UPDATE_CUSTOMER_PERSONAL_DETAILS:
       return {
@@ -38,18 +55,18 @@ const customerReducer = (state = initialCustomerState, action: any) => {
     case UPDATE_CARE_DETAIL:
       return {
         ...state,
-        tempJob: {
-          ...state.tempJob,
+        job: {
+          ...state.job,
           ...action.payload
         } 
       };
       case "ADD_JOB_TASKS":
         return {
           ...state,
-          tempJob: {
-            ...state.tempJob,
+          job: {
+            ...state.job,
             careDetails: {
-              ...state.tempJob?.careDetails,
+              ...state.job?.careDetails,
               tasks: action.payload
             }
           } 
@@ -57,11 +74,11 @@ const customerReducer = (state = initialCustomerState, action: any) => {
     case ADD_JOB:
       return {
         ...state, 
-        tempJob: {
-          ...state.tempJob,
+        job: {
+          ...state.job,
           typeOfCare: action.payload.type,
           careDetails: {
-            ...state.tempJob?.careDetails,
+            ...state.job?.careDetails,
             frequency: action.payload.frequency
           }
         },
@@ -72,7 +89,7 @@ const customerReducer = (state = initialCustomerState, action: any) => {
     case ADD_PROPERTY:
       return {
         ...state,
-        properties: [...state.properties, action.payload],
+        property: {...state.property, ...action.payload},
       };
     case UPDATE_PROPERTY_INFO:
       // Logic to update property information
@@ -104,11 +121,14 @@ export const updateCareDetails = (careDetails: any) => ({
   payload: careDetails
 });
 
-export const addJobTasks = (tasks: Array<string>) => ({
+export const addJobTasks = (tasks: any) => ({
   type: "ADD_JOB_TASKS",
   payload: tasks
+});
+
+export const addProperty = (property: any) => ({
+  type: ADD_PROPERTY,
+  payload: property
 })
 
-
-
-export default customerReducer;
+export default createCustomerReducer;

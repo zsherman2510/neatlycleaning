@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addJobTasks } from '../redux/reducers/customerReducer';
+import { addJobTasks } from '../redux/reducers/createCustomerReducer';
 
 type TasksByCareType = {
   [key: string]: string[];
@@ -10,6 +10,8 @@ type TasksByCareType = {
 const Tasks: React.FC = () => {
     // Maintain state for selected tasks
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
+  const [suppliesRequired, setSuppliesRequired] = useState<string>(''); // State for Supplies Required
+  const [equipmentRequired, setEquipmentRequired] = useState<string>(''); // State for Equipment Required
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -61,17 +63,22 @@ const Tasks: React.FC = () => {
   };
 
   const handleNext = () => {
-    if (!selectedTasks) {
+    if (!selectedTasks || selectedTasks.length === 0) {
       alert('Please select any tasks.');
       return;
     }
 
-    dispatch(addJobTasks(selectedTasks));
-    navigate(`/user`);
+    const jobTasks = {
+      selectedTasks,
+      suppliesRequired,
+      equipmentRequired,
+    };
+    dispatch(addJobTasks(jobTasks));
+    navigate(`/properties`);
   }
 
   return (
-    <div className="tasks-container">
+    <div className="container">
       <div className="care-question">
         What tasks do you expect that will need to completed for care type: {careType || defaultCareType}
       </div>
@@ -91,6 +98,50 @@ const Tasks: React.FC = () => {
             </label>
           </div>
         ))}
+      </div>
+      <div className="supplies-required">
+        <label>Supplies Required:</label>
+        <label>
+          <input
+            type="radio"
+            value="Yes"
+            checked={suppliesRequired === 'Yes'}
+            onChange={() => setSuppliesRequired('Yes')}
+          />
+          Yes
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="No"
+            checked={suppliesRequired === 'No'}
+            onChange={() => setSuppliesRequired('No')}
+          />
+          No
+        </label>
+      </div>
+
+      {/* Radio buttons for Equipment Required */}
+      <div className="equipment-required">
+        <label>Equipment Required:</label>
+        <label>
+          <input
+            type="radio"
+            value="Yes"
+            checked={equipmentRequired === 'Yes'}
+            onChange={() => setEquipmentRequired('Yes')}
+          />
+          Yes
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="No"
+            checked={equipmentRequired === 'No'}
+            onChange={() => setEquipmentRequired('No')}
+          />
+          No
+        </label>
       </div>
       <button className="care-next" onClick={handleNext}>Next</button>
     </div>

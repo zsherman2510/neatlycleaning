@@ -12,6 +12,7 @@ import FindCare from "./pages/FindCare";
 import { Provider } from 'react-redux';
 import store from './redux/store'
 import './App.css'
+import PropertyDetails from "./pages/PropertyDetail";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path="/tasks" element={<Tasks />} />
               <Route path="/user" element={<Creds />} />
               <Route path="/findCare" element={<FindCare />}/>
+              <Route path="/properties" element={<PropertyDetails />} />
             </Routes>
         </Layout>
       </BrowserRouter>

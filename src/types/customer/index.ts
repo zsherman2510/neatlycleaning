@@ -11,8 +11,8 @@ export interface PersonalDetails {
 
 // Job Interface
 export interface Job {
-  id: string;
-  customerId: string;
+  id: string | null;
+  customerId: string | null;
   typeOfCare: string | null;
   address: string | null;
   jobStatus: string | null;
@@ -35,8 +35,8 @@ export interface CareDetail {
 
 // Property Interface
 export interface Property {
-  id: string;
-  customerId: string;
+  id: string | null;
+  customerId: string | null;
   address: string | null;
   propertyType: string | null;
   bedrooms: number | null;
@@ -48,11 +48,10 @@ export interface Property {
 }
 
 // Customer State Interface
-export interface CustomerState {
+export interface CreateCustomerState {
   personalDetails: PersonalDetails;
-  jobs: Job[];
-  properties: Property[];
-  tempJob: Job | null;
+  job: Job;
+  property: Property;
 }
 
 

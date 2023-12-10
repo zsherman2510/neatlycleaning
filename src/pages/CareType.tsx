@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { addJob } from '../redux/reducers/customerReducer';
+import { addJob } from '../redux/reducers/createCustomerReducer';
 
 const CareType: React.FC = () => {
   const [selected, setSelected] = useState<string>('');
@@ -36,7 +36,7 @@ const CareType: React.FC = () => {
   const frequencies = ["one time", "every week", "every 2 weeks", "monthly"];
 
   return (
-    <>
+    <div className='container'>
       <div className="care-question">
         What kind of care do you need?
       </div>
@@ -73,7 +73,7 @@ const CareType: React.FC = () => {
       </div>
 
       
-    </>
+    </div>
   )
 }
 

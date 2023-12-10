@@ -2,7 +2,8 @@ type Props = {}
 
 export default function Footer({}: Props) {
   return (
-    <div className="footer">
+    <div className="footer-container">
+      <div className="footer">
       <div className="footer-section">
         <h3>About Us</h3>
         <ul>
@@ -33,6 +34,8 @@ export default function Footer({}: Props) {
           <li><a href="#">Twitter</a></li>
         </ul>
       </div>
+      </div>
+     
     </div>
   )
 }
