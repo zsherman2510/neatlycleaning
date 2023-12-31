@@ -1,61 +1,61 @@
-import React, {useState} from 'react'
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addJobTasks } from '../redux/reducers/createCustomerReducer';
+import React, { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addJobTasks } from "../redux/reducers/createCustomerReducer";
 
 type TasksByCareType = {
   [key: string]: string[];
 };
 
 const Tasks: React.FC = () => {
-    // Maintain state for selected tasks
+  // Maintain state for selected tasks
   const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
-  const [suppliesRequired, setSuppliesRequired] = useState<string>(''); // State for Supplies Required
-  const [equipmentRequired, setEquipmentRequired] = useState<string>(''); // State for Equipment Required
+  const [durationHours, setDurationHours] = useState<string>("0"); // State for duration in hours
+  const [durationMinutes, setDurationMinutes] = useState<string>("0"); // State for duration in minutes
+  const [priceDollars, setPriceDollars] = useState<string>("0");
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const searchParams = new URLSearchParams(location.search);
-  const careType = searchParams.get('careType');
+  const careType = searchParams.get("careType");
 
   const tasksByCareType: TasksByCareType = {
-    child: [
-      'Feed the child',
-      'Play with the child',
-      'Help with homework',
-    ],
+    child: ["Feed the child", "Play with the child", "Help with homework"],
     senior: [
-      'Assist with daily medication',
-      'Provide companionship',
-      'Prepare meals',
+      "Assist with daily medication",
+      "Provide companionship",
+      "Prepare meals",
     ],
     house: [
-      'Clean and organize rooms',
-      'Do laundry and ironing',
-      'Dust and vacuum',
+      "Clean and organize rooms",
+      "Do laundry and ironing",
+      "Dust and vacuum",
     ],
     pet: [
-      'Feed and water the pet',
-      'Take the pet for a walk',
-      'Clean the pet living area',
+      "Feed and water the pet",
+      "Take the pet for a walk",
+      "Clean the pet living area",
     ],
     tutor: [
-      'Teach subjects like math',
-      'Provide study guidance',
-      'Help with test preparation',
+      "Teach subjects like math",
+      "Provide study guidance",
+      "Help with test preparation",
     ],
   };
-  const defaultCareType = 'house'; // Set your default care type here
-  const availableTasks = careType && tasksByCareType[careType]
-    ? tasksByCareType[careType]
-    : tasksByCareType[defaultCareType];
+  const defaultCareType = "house"; // Set your default care type here
+  const availableTasks =
+    careType && tasksByCareType[careType]
+      ? tasksByCareType[careType]
+      : tasksByCareType[defaultCareType];
 
   // Handle task selection
   const toggleTaskSelection = (task: string) => {
     if (selectedTasks.includes(task)) {
       // Task is already selected, so deselect it
-      setSelectedTasks(selectedTasks.filter((selectedTask) => selectedTask !== task));
+      setSelectedTasks(
+        selectedTasks.filter((selectedTask) => selectedTask !== task)
+      );
     } else {
       // Task is not selected, so select it
       setSelectedTasks([...selectedTasks, task]);
@@ -64,23 +64,24 @@ const Tasks: React.FC = () => {
 
   const handleNext = () => {
     if (!selectedTasks || selectedTasks.length === 0) {
-      alert('Please select any tasks.');
+      alert("Please select any tasks.");
       return;
     }
-
+    const priceInDollars = parseFloat(priceDollars);
     const jobTasks = {
       selectedTasks,
-      suppliesRequired,
-      equipmentRequired,
+      duration: `${durationHours} hours ${durationMinutes} minutes`,
+      price: priceInDollars,
     };
     dispatch(addJobTasks(jobTasks));
     navigate(`/properties`);
-  }
+  };
 
   return (
     <div className="container">
       <div className="care-question">
-        What tasks do you expect that will need to completed for care type: {careType || defaultCareType}
+        What tasks do you expect that will need to completed for care type:{" "}
+        {careType || defaultCareType}
       </div>
       <div className="task-list">
         {availableTasks.map((task, index) => (
@@ -99,55 +100,44 @@ const Tasks: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className="supplies-required">
-        <label>Supplies Required:</label>
-        <label>
-          <input
-            type="radio"
-            value="Yes"
-            checked={suppliesRequired === 'Yes'}
-            onChange={() => setSuppliesRequired('Yes')}
-          />
-          Yes
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="No"
-            checked={suppliesRequired === 'No'}
-            onChange={() => setSuppliesRequired('No')}
-          />
-          No
-        </label>
-      </div>
 
-      {/* Radio buttons for Equipment Required */}
-      <div className="equipment-required">
-        <label>Equipment Required:</label>
-        <label>
-          <input
-            type="radio"
-            value="Yes"
-            checked={equipmentRequired === 'Yes'}
-            onChange={() => setEquipmentRequired('Yes')}
-          />
-          Yes
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="No"
-            checked={equipmentRequired === 'No'}
-            onChange={() => setEquipmentRequired('No')}
-          />
-          No
-        </label>
+      <div className="duration-selection">
+        <label>Duration:</label>
+        <select
+          value={durationHours}
+          onChange={(e) => setDurationHours(e.target.value)}
+        >
+          {Array.from({ length: 24 }, (_, i) => (
+            <option key={i} value={i}>
+              {i} hours
+            </option>
+          ))}
+        </select>
+        <select
+          value={durationMinutes}
+          onChange={(e) => setDurationMinutes(e.target.value)}
+        >
+          {Array.from({ length: 60 }, (_, i) => (
+            <option key={i} value={i}>
+              {i} minutes
+            </option>
+          ))}
+        </select>
       </div>
-      <button className="care-next" onClick={handleNext}>Next</button>
+      <div className="price-selection">
+        <label>Price (in dollars):</label>
+        <input
+          type="number"
+          value={priceDollars}
+          onChange={(e) => setPriceDollars(e.target.value)}
+          placeholder="Dollars"
+        />
+      </div>
+      <button className="care-next" onClick={handleNext}>
+        Next
+      </button>
     </div>
   );
-  
-  
 };
 
 export default Tasks;

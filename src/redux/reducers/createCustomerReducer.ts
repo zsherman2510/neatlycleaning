@@ -1,13 +1,14 @@
+import { PersonalDetails } from "../../types/cleaner";
 import { CreateCustomerState } from "../../types/customer";
 
 // Define Action Types
-const UPDATE_CUSTOMER_PERSONAL_DETAILS = 'UPDATE_CUSTOMER_PERSONAL_DETAILS';
-const ADD_JOB = 'ADD_JOB';
-const UPDATE_JOB = 'UPDATE_JOB';
-const UPDATE_CARE_DETAIL = 'UPDATE_CARE_DETAIL';
-const ADD_PROPERTY = 'ADD_PROPERTY';
-const UPDATE_PROPERTY_INFO = 'UPDATE_PROPERTY_INFO';
-const UPDATE_HOME_INFO = 'UPDATE_HOME_INFO';
+const UPDATE_CUSTOMER_PERSONAL_DETAILS = "UPDATE_CUSTOMER_PERSONAL_DETAILS";
+const ADD_JOB = "ADD_JOB";
+const UPDATE_JOB = "UPDATE_JOB";
+const UPDATE_CARE_DETAIL = "UPDATE_CARE_DETAIL";
+const ADD_PROPERTY = "ADD_PROPERTY";
+const UPDATE_PROPERTY_INFO = "UPDATE_PROPERTY_INFO";
+const UPDATE_HOME_INFO = "UPDATE_HOME_INFO";
 
 // Define initial state
 const initialCustomerState: CreateCustomerState = {
@@ -16,7 +17,7 @@ const initialCustomerState: CreateCustomerState = {
     lastName: null,
     email: null,
     phoneNumber: null,
-    address: null
+    address: null,
   },
   job: {
     id: null,
@@ -25,7 +26,10 @@ const initialCustomerState: CreateCustomerState = {
     address: null,
     jobStatus: null,
     specialRequests: null,
-    careDetails: []
+    frequency: null,
+    duration: null,
+    tasks: [],
+    price: null,
   },
   property: {
     id: null,
@@ -34,14 +38,9 @@ const initialCustomerState: CreateCustomerState = {
     propertyType: null,
     bedrooms: null,
     bathrooms: null,
-    suppliesRequired: null,
-    equipmentRequired: null,
-    isPrimary: null
+    isPrimary: null,
   },
-  
 };
-
-
 
 // Define the reducer
 const createCustomerReducer = (state = initialCustomerState, action: any) => {
@@ -57,30 +56,26 @@ const createCustomerReducer = (state = initialCustomerState, action: any) => {
         ...state,
         job: {
           ...state.job,
-          ...action.payload
-        } 
+          ...action.payload,
+        },
       };
-      case "ADD_JOB_TASKS":
-        return {
-          ...state,
-          job: {
-            ...state.job,
-            careDetails: {
-              ...state.job?.careDetails,
-              tasks: action.payload
-            }
-          } 
-        };
+    case "ADD_JOB_TASKS":
+      return {
+        ...state,
+        job: {
+          ...state.job,
+          tasks: [...action.payload.tasks],
+          frequency: action.payload.frequency,
+          duration: action.payload.duration,
+          price: action.payload.price,
+        },
+      };
     case ADD_JOB:
       return {
-        ...state, 
+        ...state,
         job: {
           ...state.job,
           typeOfCare: action.payload.type,
-          careDetails: {
-            ...state.job?.careDetails,
-            frequency: action.payload.frequency
-          }
         },
       };
     case UPDATE_JOB:
@@ -89,12 +84,11 @@ const createCustomerReducer = (state = initialCustomerState, action: any) => {
     case ADD_PROPERTY:
       return {
         ...state,
-        property: {...state.property, ...action.payload},
+        property: { ...state.property, ...action.payload },
       };
     case UPDATE_PROPERTY_INFO:
       // Logic to update property information
       break;
-    // ... handle other customer-specific actions
     default:
       return state;
   }
@@ -118,17 +112,26 @@ export const updateHomeInfo = (index: number, info: any) => ({
 
 export const updateCareDetails = (careDetails: any) => ({
   type: UPDATE_CARE_DETAIL,
-  payload: careDetails
+  payload: careDetails,
 });
 
 export const addJobTasks = (tasks: any) => ({
   type: "ADD_JOB_TASKS",
-  payload: tasks
+  payload: tasks,
 });
 
 export const addProperty = (property: any) => ({
   type: ADD_PROPERTY,
-  payload: property
-})
+  payload: property,
+});
 
+export const createAccount = (account: any) => ({
+  type: "CREATE_ACCOUNT",
+  payload: account,
+});
+
+export const selectCustomer = (state: any) => state.CreateAccountCustomer;
+
+export const selectCustomerPersonalDetails = (state: CreateCustomerState) =>
+  state.personalDetails;
 export default createCustomerReducer;

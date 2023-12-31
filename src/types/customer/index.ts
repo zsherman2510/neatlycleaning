@@ -17,20 +17,11 @@ export interface Job {
   address: string | null;
   jobStatus: string | null;
   specialRequests: string | null;
-  careDetails: CareDetail[];
-  // ... other job-related fields
-}
-
-// Care Detail Interface
-export interface CareDetail {
-  id: string;
-  jobId: string;
   frequency: string | null;
   duration: number | null;
   price: number | null;
   tasks: string[];
-  
-  // ... other care detail fields
+  // ... other job-related fields
 }
 
 // Property Interface
@@ -41,8 +32,6 @@ export interface Property {
   propertyType: string | null;
   bedrooms: number | null;
   bathrooms: number | null;
-  suppliesRequired: boolean | null;
-  equipmentRequired: boolean | null;
   isPrimary: boolean | null;
   // ... other property-related fields
 }
@@ -54,6 +43,10 @@ export interface CreateCustomerState {
   property: Property;
 }
 
+export interface AccountCreationData {
+  email: string | null;
+  password: string | null;
+}
 
 export interface PayRateFilter {
   min: number;
@@ -74,5 +67,3 @@ export interface Caregiver {
   rate: number;
   photoUrl: string;
 }
-
-
