@@ -64,8 +64,7 @@ const createCustomerReducer = (state = initialCustomerState, action: any) => {
         ...state,
         job: {
           ...state.job,
-          tasks: [...action.payload.tasks],
-          frequency: action.payload.frequency,
+          tasks: [...action.payload.selectedTasks],
           duration: action.payload.duration,
           price: action.payload.price,
         },
@@ -76,6 +75,7 @@ const createCustomerReducer = (state = initialCustomerState, action: any) => {
         job: {
           ...state.job,
           typeOfCare: action.payload.type,
+          frequency: action.payload.frequency,
         },
       };
     case UPDATE_JOB:

@@ -32,6 +32,9 @@ module.exports = (sequelize, DataTypes) => {
       jobStatus: DataTypes.STRING,
       specialRequests: DataTypes.TEXT,
       tasks: { type: DataTypes.JSON, allowNull: false },
+      frequency: { type: DataTypes.STRING, allowNull: false },
+      duration: { type: DataTypes.STRING, allowNull: false },
+      price: { type: DataTypes.FLOAT, allowNull: true },
       createdAt: {
         allowNull: false,
         type: DataTypes.DATE,
