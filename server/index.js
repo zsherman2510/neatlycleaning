@@ -44,7 +44,7 @@ app.post("/cleaners/register", async (req, res) => {
       req.body;
 
     console.log(property, job);
-    console.log(property);
+    console.log(job.frequency, "job frequency");
     console.log(password, "password");
     const hashedPassword = await bcrypt.hash(password, 10);
     console.log(hashedPassword);
@@ -68,21 +68,20 @@ app.post("/cleaners/register", async (req, res) => {
     // Create a new Job record and associate it with the customer and property
     const jobRecord = await Jobs.create({
       ...job,
+      frequency: job.frequency,
       customerId: customer.id,
       propertyId: propertyRecord.id,
       tasks: JSON.stringify(job.tasks),
     });
 
-    // Create CareDetail records and associate them with the job
-    for (const careDetailData of job.careDetails) {
-      await CareDetail.create({
-        ...careDetailData,
-        jobId: jobRecord.id,
-      });
-    }
+    const response = {
+      customer,
+      propertyRecord,
+      jobRecord,
+    };
 
     // Respond with the created customer object
-    res.status(201).json(customer);
+    res.status(201).json(response);
   } catch (error) {
     console.error("Error creating user:", error);
     res.status(500).json({ error: "Server error" });
