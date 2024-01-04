@@ -1,15 +1,15 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
-import SignUp from "./pages/SignUp";
-import CareType from "./pages/CareType";
-import Tasks from "./pages/CareDetails";
-import Creds from "./pages/Creds";
-import FindCare from "./pages/FindCare";
-import Login from "./pages/Login";
+import SignUp from "./pages/CustomerFlow/SignUp";
+import CareType from "./pages/CustomerFlow/CareType";
+import Tasks from "./pages/CustomerFlow/CareDetails";
+import Creds from "./pages/CustomerFlow/Creds";
+import FindCare from "./pages/CustomerFlow/FindCare";
+import Login from "./pages/CustomerFlow/Login";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import "./App.css";
-import PropertyDetails from "./pages/PropertyDetail";
+import PropertyDetails from "./pages/CustomerFlow/PropertyDetail";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
             <Route path="/careType" element={<CareType />} />
             <Route path="/tasks" element={<Tasks />} />
             <Route path="/user" element={<Creds />} />
-            <Route path="/findCare" element={<FindCare />} />
+            <Route path="/dashboard" element={<FindCare />} />
             <Route path="/properties" element={<PropertyDetails />} />
             <Route path="/login" element={<Login />} />
           </Routes>

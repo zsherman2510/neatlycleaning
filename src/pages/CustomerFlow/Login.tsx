@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "../api/user";
+import { loginUser } from "../../api/user";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("qa@gmail.com");
@@ -21,15 +21,10 @@ const Login: React.FC = () => {
       console.log(response);
 
       if (response && response.token) {
+        localStorage.setItem("jwtToken", response.token);
+        navigate("/dashboard");
+      } else {
       }
-      // navigate("/findCare");
-      // Make an API call to authenticate the user
-      // Replace this with your actual authentication logic
-      // const response = await login(email, password);
-      // Handle the response from the API as needed
-      // console.log("User authenticated:", response);
-      // Redirect the user to the next step or page
-      // navigate("/dashboard");
     } catch (error) {
       // Handle authentication errors
       console.error("Authentication error:", error);

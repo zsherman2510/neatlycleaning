@@ -5,8 +5,8 @@ import {
   updateCustomerPersonalDetails,
   selectCustomerPersonalDetails,
   selectCustomer,
-} from "../redux/reducers/createCustomerReducer";
-import { registerCleaner } from "../api/user";
+} from "../../redux/reducers/createCustomerReducer";
+import { registerCleaner } from "../../api/user";
 type Props = {};
 
 const Creds: React.FC = ({}: Props) => {
