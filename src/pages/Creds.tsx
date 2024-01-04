@@ -55,7 +55,7 @@ const Creds: React.FC = ({}: Props) => {
     }
     setFormError("");
 
-    // navigate("/findCare");
+    navigate("/login");
   };
 
   return (
