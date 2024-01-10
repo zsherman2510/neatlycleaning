@@ -441,6 +441,21 @@
   cursor: pointer;
 }
 
+.preview {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+  border: 1px solid #ccc;
+}
+
+.bio-input {
+  height: 120px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: vertical;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-layout {

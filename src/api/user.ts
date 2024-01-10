@@ -1,4 +1,4 @@
-export const registerCleaner = async (personalDetails: any, user: any) => {
+export const registerCustomer = async (personalDetails: any, user: any) => {
   const postData = {
     ...personalDetails,
     ...user,
@@ -14,6 +14,29 @@ export const registerCleaner = async (personalDetails: any, user: any) => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(postData),
+      }
+    );
+
+    const data = await response.json();
+
+    return data;
+  } catch (error: any) {
+    console.error("Error registering user:", error.toString());
+    throw error; // If you want the error to be propagated to the caller
+  }
+};
+
+export const registerCleaner = async (cleaner: any) => {
+  console.log(cleaner);
+  try {
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/cleaners/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cleaner),
       }
     );
 

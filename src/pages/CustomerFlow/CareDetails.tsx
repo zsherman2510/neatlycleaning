@@ -86,10 +86,11 @@ const Tasks: React.FC = () => {
       <div className="task-list">
         {availableTasks.map((task, index) => (
           <div key={index} className="task-item">
-            <label className="task-label">
+            <label htmlFor={`${task}`} className="task-label">
               <span className="task-text">{task}</span>
               <input
                 type="checkbox"
+                id={task}
                 value={task}
                 checked={selectedTasks.includes(task)}
                 onChange={() => toggleTaskSelection(task)}

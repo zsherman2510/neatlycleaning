@@ -44,7 +44,12 @@ app.get("/", (req, res) => {
   res.json({ message: "Welcome to the cleaning app's server!" });
 });
 
-app.post("/cleaners/register", async (req, res) => {
+app.post("/cleaner/register", async (req, res) => {
+  try {
+  } catch (e) {}
+});
+
+app.post("/customer/register", async (req, res) => {
   try {
     // Extract data from the request body
     const { property, job, firstName, lastName, email, phoneNumber, password } =

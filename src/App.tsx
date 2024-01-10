@@ -6,6 +6,10 @@ import Tasks from "./pages/CustomerFlow/CareDetails";
 import Creds from "./pages/CustomerFlow/Creds";
 import FindCare from "./pages/CustomerFlow/FindCare";
 import Login from "./pages/CustomerFlow/Login";
+import CleanerDetails from "./pages/CleanerFlow/CleanerDetails";
+import CleanerExperience from "./pages/CleanerFlow/CleanerExp";
+import CreateProfile from "./pages/CleanerFlow/CreateProfile";
+import CleanerCreds from "./pages/CleanerFlow/CleanerCreds";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import "./App.css";
@@ -24,6 +28,10 @@ function App() {
             <Route path="/dashboard" element={<FindCare />} />
             <Route path="/properties" element={<PropertyDetails />} />
             <Route path="/login" element={<Login />} />
+            <Route path="/details" element={<CleanerDetails />} />
+            <Route path="/experience" element={<CleanerExperience />} />
+            <Route path="/profile" element={<CreateProfile />} />
+            <Route path="/cleanerCreds" element={<CleanerCreds />} />
           </Routes>
         </Layout>
       </BrowserRouter>

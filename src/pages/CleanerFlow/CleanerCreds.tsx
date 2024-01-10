@@ -1,51 +1,54 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  updateCustomerPersonalDetails,
-  selectCustomerPersonalDetails,
-  selectCustomer,
-} from "../../redux/reducers/createCustomerReducer";
-import { registerCustomer } from "../../api/user";
+import { selectCleaner } from "../../redux/reducers/cleanerReducer";
+import { registerCleaner } from "../../api/user";
 type Props = {};
 
-const Creds: React.FC = ({}: Props) => {
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
+const CleanerCreds: React.FC = ({}: Props) => {
   const [email, setEmail] = useState<string>("");
-  const [phoneNumber, setPhoneNumber] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [formError, setFormError] = useState<string>("");
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const data = useSelector(selectCustomer);
-  console.log(data, "data");
+  const data = useSelector(selectCleaner);
   const handleSubmit = async () => {
-    if (!firstName || !lastName || !email || !phoneNumber) {
+    if (!email || !password) {
       setFormError("Please enter both your first and last name.");
       return;
     }
-    // Handle the submission logic here
-    const personalDetails = {
-      firstName,
-      lastName,
-      email,
-      phoneNumber,
-      password,
-    };
-    // Reset form error on successful submission
 
-    dispatch(updateCustomerPersonalDetails(personalDetails));
+    const formData = new FormData();
+
+    // Append email and password to the formData
+    formData.append("email", email);
+    formData.append("password", password);
+
+    // Loop through the 'data' object and its properties
+    for (const sectionKey in data) {
+      if (data.hasOwnProperty(sectionKey)) {
+        const section = data[sectionKey];
+
+        // Loop through the properties of the current section
+        for (const propertyKey in section) {
+          if (section.hasOwnProperty(propertyKey)) {
+            const propertyValue = section[propertyKey];
+
+            // Append the property value to the formData
+            formData.append(`${propertyKey}`, propertyValue);
+          }
+        }
+      }
+    }
 
     try {
       // Make an API call to create the user account
-      const response = await registerCustomer(personalDetails, data);
+      const response = await registerCleaner(formData);
 
       // Handle the response from the API as needed
       console.log("User account created:", response);
 
       // Redirect the user to the next step or page
-      // navigate("/findCare");
+      navigate("/login");
     } catch (error) {
       // Handle API call errors
       console.error("Error creating user account:", error);
@@ -64,35 +67,6 @@ const Creds: React.FC = ({}: Props) => {
         Almost done, add a few details about yourself
       </div>
       <div className="creds-form">
-        <div className="input-group">
-          <input
-            type="text"
-            placeholder="First name"
-            value={firstName}
-            onChange={(e) => setFirstName(e.target.value)}
-            className="input-field"
-          />
-        </div>
-        <div className="input-group">
-          <input
-            type="text"
-            placeholder="Last name"
-            value={lastName}
-            onChange={(e) => setLastName(e.target.value)}
-            className="input-field"
-          />
-        </div>
-
-        <div className="input-group">
-          <input
-            type="tel"
-            placeholder="Phone number"
-            value={phoneNumber}
-            onChange={(e) => setPhoneNumber(e.target.value)}
-            className="input-field"
-          />
-        </div>
-
         <div className="care-question">Create Login Credentials</div>
         <div className="input-group">
           <input
@@ -122,4 +96,4 @@ const Creds: React.FC = ({}: Props) => {
   );
 };
 
-export default Creds;
+export default CleanerCreds;

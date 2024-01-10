@@ -7,6 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       // Assuming you have Customer and Property models
       Jobs.belongsTo(models.Customer, { foreignKey: "customerId" });
       Jobs.belongsTo(models.Properties, { foreignKey: "propertyId" });
+      Jobs.belongsTo(models.Cleaner, { foreignKey: "cleanerId" });
     }
   }
   Jobs.init(

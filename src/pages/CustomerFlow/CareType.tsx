@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addJob } from "../../redux/reducers/createCustomerReducer";
+import { options } from "../../types/misc/utils";
 
 const CareType: React.FC = () => {
   const [selected, setSelected] = useState<string>("");
@@ -27,13 +28,6 @@ const CareType: React.FC = () => {
     dispatch(addJob(selected, frequency));
     navigate(`/tasks?careType=${selected}`);
   };
-  const options = [
-    { key: "child", text: "Child care" },
-    { key: "senior", text: "Senior care" },
-    { key: "house", text: "Housekeeping" },
-    { key: "pet", text: "Pet care" },
-    { key: "tutor", text: "Tutoring" },
-  ];
 
   const frequencies = ["one time", "every week", "every 2 weeks", "monthly"];
 
@@ -57,10 +51,11 @@ const CareType: React.FC = () => {
       <div className="frequency-selection">
         <h2>How often do you need care?</h2>
         {frequencies.map((freq) => (
-          <label key={freq}>
+          <label htmlFor="frequency" key={freq}>
             <input
               type="radio"
               name="frequency"
+              id="frequency"
               value={freq}
               checked={frequency === freq}
               onChange={handleFrequencyChange}
