@@ -109,13 +109,14 @@ app.post("/login", async (req, res) => {
     // Query the database to find a user with the provided email
     const customer = await Customer.findOne({ where: { email } });
     const cleaner = await Cleaner.findOne({ where: { email } });
+
     // If the user doesn't exist, respond with an error
     if (!customer && !cleaner) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
 
     const userType = customer ? "customer" : "cleaner";
-    const user = customer || cleaner;
+    let user = customer || cleaner;
 
     // Compare the provided password with the hashed password from the database
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -124,6 +125,12 @@ app.post("/login", async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
+    // Remove the password field from the user object
+    delete user.dataValues.password;
+
+    const { dataValues: returnedUser } = user;
+
+    console.log(returnedUser, "returneduser");
 
     // If authentication is successful, generate a JWT
     const token = jwt.sign(
@@ -140,18 +147,10 @@ app.post("/login", async (req, res) => {
         console.error("Token verification failed:", err);
         res.status(401).json({ error: "Token is invalid or has expired" });
       } else {
-        // Token is valid, and `decoded` contains the payload
         console.log("Token is valid. Decoded payload:", decoded, token);
 
-        // You can now access the payload properties like `userId`
-        const userId = decoded.userId;
         const userType = decoded.userType;
-        // Proceed with your authentication logic or other operations
-        // For example, you can fetch user data based on `userId` and perform actions accordingly
-        // ...
-
-        // Optionally, you can send a success response
-        res.json({ token, message: "Token is valid", userId, userType });
+        res.json({ token, message: "Token is valid", returnedUser, userType });
       }
     });
   } catch (error) {
