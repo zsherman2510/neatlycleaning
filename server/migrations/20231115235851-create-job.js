@@ -26,6 +26,14 @@ module.exports = {
           key: "id",
         },
       },
+      cleanerId: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Cleaners",
+          key: "id",
+        },
+      },
       typeOfCare: Sequelize.STRING,
       address: Sequelize.STRING,
       jobStatus: Sequelize.STRING,

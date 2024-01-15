@@ -1,7 +1,5 @@
-// Import necessary modules
-const { Model } = require("sequelize"); // Make sure to configure your database connection
-
-// Define the Cleaner model
+"use strict";
+const { Model } = require("sequelize");
 
 module.exports = (sequelize, DataTypes) => {
   class Cleaner extends Model {}

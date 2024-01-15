@@ -456,6 +456,13 @@
   resize: vertical;
 }
 
+.login-creds {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #888;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .main-layout {

@@ -4,10 +4,9 @@ export const registerCustomer = async (personalDetails: any, user: any) => {
     ...user,
   };
 
-  console.log(postData);
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/cleaners/register`,
+      `${import.meta.env.VITE_API_URL}/customer/register`,
       {
         method: "POST",
         headers: {
@@ -27,10 +26,9 @@ export const registerCustomer = async (personalDetails: any, user: any) => {
 };
 
 export const registerCleaner = async (cleaner: any) => {
-  console.log(cleaner);
   try {
     const response = await fetch(
-      `${import.meta.env.VITE_API_URL}/cleaners/register`,
+      `${import.meta.env.VITE_API_URL}/cleaner/register`,
       {
         method: "POST",
         headers: {

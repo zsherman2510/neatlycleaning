@@ -28,6 +28,14 @@ module.exports = (sequelize, DataTypes) => {
           key: "id",
         },
       },
+      cleanerId: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: "Cleaners",
+          key: "id",
+        },
+      },
       typeOfCare: DataTypes.STRING,
       address: DataTypes.STRING,
       jobStatus: DataTypes.STRING,

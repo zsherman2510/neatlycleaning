@@ -4,16 +4,12 @@ const cors = require("cors");
 const { Sequelize } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const multer = require("multer");
 const fs = require("fs");
-const { Customer, Properties, Jobs, CareDetail } = require("./models");
+const { Customer, Properties, Jobs, Cleaner } = require("./models");
 require("dotenv").config();
 
 const app = express();
-
-// const privateKey = fs.readFileSync("server/private-key.pem", "utf8");
-const publicKey = fs.readFileSync("server/public-key.pem", "utf8");
-
-// console.log(privateKey, "privateKey");
 
 // Middlewares
 app.use(cors());
@@ -46,6 +42,21 @@ app.get("/", (req, res) => {
 
 app.post("/cleaner/register", async (req, res) => {
   try {
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
+    const cleaner = await Cleaner.create({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: hashedPassword,
+      phoneNumber: req.body.phone,
+      yearsOfExperience: req.body.cleaningExperience,
+      servicesOffered: req.body.cleaningServices,
+      preferredServiceAreas: req.body.preferredServiceArea,
+      profilePhotoUrl: req.body.profilePhotoUrl,
+    });
+
+    // Respond with the created customer object
+    res.status(201).json(cleaner.id);
   } catch (e) {}
 });
 
@@ -55,11 +66,7 @@ app.post("/customer/register", async (req, res) => {
     const { property, job, firstName, lastName, email, phoneNumber, password } =
       req.body;
 
-    console.log(property, job);
-    console.log(job.frequency, "job frequency");
-    console.log(password, "password");
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log(hashedPassword);
 
     // Create a new Customer record in the database
     const customer = await Customer.create({
@@ -78,7 +85,7 @@ app.post("/customer/register", async (req, res) => {
     });
 
     // Create a new Job record and associate it with the customer and property
-    const jobRecord = await Jobs.create({
+    await Jobs.create({
       ...job,
       frequency: job.frequency,
       customerId: customer.id,
@@ -86,14 +93,8 @@ app.post("/customer/register", async (req, res) => {
       tasks: JSON.stringify(job.tasks),
     });
 
-    const response = {
-      customer,
-      propertyRecord,
-      jobRecord,
-    };
-
     // Respond with the created customer object
-    res.status(201).json(response);
+    res.status(201).json(customer.id);
   } catch (error) {
     console.error("Error creating user:", error);
     res.status(500).json({ error: "Server error" });
@@ -106,13 +107,15 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
 
     // Query the database to find a user with the provided email
-    const user = await Customer.findOne({ where: { email } });
-    console.log(user.id, "user");
-
+    const customer = await Customer.findOne({ where: { email } });
+    const cleaner = await Cleaner.findOne({ where: { email } });
     // If the user doesn't exist, respond with an error
-    if (!user) {
+    if (!customer && !cleaner) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
+
+    const userType = customer ? "customer" : "cleaner";
+    const user = customer || cleaner;
 
     // Compare the provided password with the hashed password from the database
     const isPasswordValid = await bcrypt.compare(password, user.password);
@@ -123,9 +126,13 @@ app.post("/login", async (req, res) => {
     }
 
     // If authentication is successful, generate a JWT
-    const token = jwt.sign({ userId: user.id }, process.env.SECRET_KEY, {
-      expiresIn: "1h", // You can adjust the expiration time
-    });
+    const token = jwt.sign(
+      { userId: user.id, userType },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "1h", // You can adjust the expiration time
+      }
+    );
 
     jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
       if (err) {
@@ -138,13 +145,13 @@ app.post("/login", async (req, res) => {
 
         // You can now access the payload properties like `userId`
         const userId = decoded.userId;
-
+        const userType = decoded.userType;
         // Proceed with your authentication logic or other operations
         // For example, you can fetch user data based on `userId` and perform actions accordingly
         // ...
 
         // Optionally, you can send a success response
-        res.json({ token, message: "Token is valid", userId });
+        res.json({ token, message: "Token is valid", userId, userType });
       }
     });
   } catch (error) {

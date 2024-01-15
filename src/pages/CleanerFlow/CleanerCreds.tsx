@@ -17,38 +17,25 @@ const CleanerCreds: React.FC = ({}: Props) => {
       return;
     }
 
-    const formData = new FormData();
-
-    // Append email and password to the formData
-    formData.append("email", email);
-    formData.append("password", password);
-
-    // Loop through the 'data' object and its properties
-    for (const sectionKey in data) {
-      if (data.hasOwnProperty(sectionKey)) {
-        const section = data[sectionKey];
-
-        // Loop through the properties of the current section
-        for (const propertyKey in section) {
-          if (section.hasOwnProperty(propertyKey)) {
-            const propertyValue = section[propertyKey];
-
-            // Append the property value to the formData
-            formData.append(`${propertyKey}`, propertyValue);
-          }
-        }
-      }
-    }
+    const postData = {
+      email,
+      password,
+      profilePhotoUrl: data.picture,
+      ...data.cleaningDetails,
+      ...data.personalDetails,
+    };
 
     try {
       // Make an API call to create the user account
-      const response = await registerCleaner(formData);
+      const response = await registerCleaner(postData);
 
       // Handle the response from the API as needed
       console.log("User account created:", response);
-
+      if (response) {
+        navigate("/login");
+      }
       // Redirect the user to the next step or page
-      navigate("/login");
+      //navigate("/login");
     } catch (error) {
       // Handle API call errors
       console.error("Error creating user account:", error);
@@ -58,7 +45,7 @@ const CleanerCreds: React.FC = ({}: Props) => {
     }
     setFormError("");
 
-    navigate("/login");
+    //navigate("/login");
   };
 
   return (

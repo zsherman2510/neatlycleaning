@@ -24,7 +24,7 @@ const CreateProfile: React.FC = () => {
       return;
     }
 
-    dispatch(updateProfilePicture(profileImage));
+    dispatch(updateProfilePicture(previewImage));
     navigate("/cleanerCreds");
   };
 
