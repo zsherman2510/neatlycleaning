@@ -5,7 +5,7 @@ import {
   updateCustomerPersonalDetails,
   selectCustomerPersonalDetails,
   selectCustomer,
-} from "../../redux/reducers/createCustomerReducer";
+} from "../../redux/reducers/customer/createCustomerReducer";
 import { registerCustomer } from "../../api/user";
 type Props = {};
 

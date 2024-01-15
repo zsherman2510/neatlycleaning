@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addJob } from "../../redux/reducers/createCustomerReducer";
+import { addJob } from "../../redux/reducers/customer/createCustomerReducer";
 import { options } from "../../types/misc/utils";
 
 const CareType: React.FC = () => {

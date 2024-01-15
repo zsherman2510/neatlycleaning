@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { updateProfilePicture } from "../../redux/reducers/cleanerReducer";
+import { updateProfilePicture } from "../../redux/reducers/cleaner/createCleanerReducer";
 const CreateProfile: React.FC = () => {
   const [profileImage, setProfileImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string | null>(null);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 //import { addCleanerInfo } from "../redux/actions";
-import { updateCleanerPersonalDetails } from "../../redux/reducers/cleanerReducer";
+import { updateCleanerPersonalDetails } from "../../redux/reducers/cleaner/createCleanerReducer";
 
 const CleanerDetails = () => {
   const [firstName, setFirstName] = useState("");

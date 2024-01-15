@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { loginUser } from "../../api/user";
+import { setUserData } from "../../redux/reducers/customer/user";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("qa@gmail.com");
   const [password, setPassword] = useState<string>("flower1234");
   const [formError, setFormError] = useState<string>("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async () => {
     if (!email || !password) {
@@ -22,6 +25,8 @@ const Login: React.FC = () => {
 
       if (response && response.token) {
         localStorage.setItem("jwtToken", response.token);
+
+        dispatch(setUserData(response));
         navigate("/dashboard");
       } else {
       }

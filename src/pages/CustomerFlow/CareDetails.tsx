@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addJobTasks } from "../../redux/reducers/createCustomerReducer";
+import { addJobTasks } from "../../redux/reducers/customer/createCustomerReducer";
 
 type TasksByCareType = {
   [key: string]: string[];

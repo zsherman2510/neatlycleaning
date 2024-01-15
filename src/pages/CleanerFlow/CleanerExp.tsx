@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { options } from "../../types/misc/utils";
-import { updateCleanerDetails } from "../../redux/reducers/cleanerReducer";
+import { updateCleanerDetails } from "../../redux/reducers/cleaner/createCleanerReducer";
 
 const CleanerExperience = () => {
   const [yearsOfExperience, setYearsOfExperience] = useState<string>("");

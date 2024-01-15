@@ -1,17 +1,17 @@
-import { configureStore } from '@reduxjs/toolkit';
-import cleanerReducer from './reducers/cleanerReducer';
-import createCustomerReducer from './reducers/createCustomerReducer';
-import logger from 'redux-logger'
+import { configureStore } from "@reduxjs/toolkit";
+import cleanerReducer from "./reducers/cleaner/createCleanerReducer";
+import createCustomerReducer from "./reducers/customer/createCustomerReducer";
+import userReducer from "./reducers/customer/user";
+import logger from "redux-logger";
 
 const store = configureStore({
   reducer: {
     CreateAccountCleaner: cleanerReducer,
     CreateAccountCustomer: createCustomerReducer,
-
+    User: userReducer,
   },
   // You can add middlewares here
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
-  
 });
 
 export type RootState = ReturnType<typeof store.getState>;

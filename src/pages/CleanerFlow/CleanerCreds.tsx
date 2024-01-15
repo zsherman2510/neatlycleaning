@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { selectCleaner } from "../../redux/reducers/cleanerReducer";
+import { selectCleaner } from "../../redux/reducers/cleaner/createCleanerReducer";
 import { registerCleaner } from "../../api/user";
 type Props = {};
 

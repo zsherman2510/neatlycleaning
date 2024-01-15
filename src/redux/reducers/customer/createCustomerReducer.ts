@@ -1,5 +1,5 @@
-import { PersonalDetails } from "../../types/cleaner";
-import { CreateCustomerState } from "../../types/customer";
+import { PersonalDetails } from "../../../types/cleaner";
+import { CreateCustomerState } from "../../../types/customer";
 
 // Define Action Types
 const UPDATE_CUSTOMER_PERSONAL_DETAILS = "UPDATE_CUSTOMER_PERSONAL_DETAILS";
