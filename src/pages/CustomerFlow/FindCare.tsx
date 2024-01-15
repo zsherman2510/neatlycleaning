@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import SearchHeader from "../../components/SearchHeader";
 import ServiceSelectionBar from "../../components/ServiceSelectionBar";
 import SearchResultHeader from "../../components/SearchResultHeader";
 import FilterSidebar from "../../components/FilterSidebar";
 import CaregiverList from "../../components/CaregiverList";
+import CustomerJobs from "../../components/CustomerJobs"; // Import the component for customer jobs
 import { Caregiver, PayRateFilter, ServicesFilter } from "../../types/customer";
+import { selectUserType } from "../../redux/reducers/user/user";
 
 const initialPayRate: PayRateFilter = { min: 14, max: 50 };
 const initialServices: ServicesFilter = {
@@ -23,6 +26,8 @@ const FindCare: React.FC = () => {
   const [payRate, setPayRate] = useState<PayRateFilter>(initialPayRate);
   const [services, setServices] = useState<ServicesFilter>(initialServices);
   const [caregivers, setCaregivers] = useState<Caregiver[]>(dummyCaregivers);
+
+  const userType = useSelector(selectUserType); // Determine the user type (caregiver or customer)
 
   const handlePayRateChange = (updatedPayRate: PayRateFilter) => {
     setPayRate(updatedPayRate);
@@ -60,7 +65,11 @@ const FindCare: React.FC = () => {
           onPayRateChange={handlePayRateChange}
           onServicesChange={handleServicesChange}
         />
-        <CaregiverList caregivers={caregivers} />
+        {userType === "customer" ? (
+          <CaregiverList caregivers={caregivers} />
+        ) : (
+          <CustomerJobs /> // Display different content for customers
+        )}
       </div>
     </div>
   );

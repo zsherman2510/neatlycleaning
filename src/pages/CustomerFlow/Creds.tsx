@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {
   updateCustomerPersonalDetails,
-  selectCustomerPersonalDetails,
   selectCustomer,
 } from "../../redux/reducers/customer/createCustomerReducer";
 import { registerCustomer } from "../../api/user";
@@ -19,7 +18,7 @@ const Creds: React.FC = ({}: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const data = useSelector(selectCustomer);
-  console.log(data, "data");
+
   const handleSubmit = async () => {
     if (!firstName || !lastName || !email || !phoneNumber) {
       setFormError("Please enter both your first and last name.");

@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../api/user";
-import { setAuthenticated, setUserData } from "../../redux/reducers/user/user";
+import {
+  setAuthToken,
+  setAuthenticated,
+  setUserData,
+} from "../../redux/reducers/user/user";
+import { getCookie } from "../../components/utils/cookies";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("qa@gmail.com");
@@ -10,6 +15,17 @@ const Login: React.FC = () => {
   const [formError, setFormError] = useState<string>("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const token = getCookie("token"); // Get the token from cookies
+    console.log(token, "token");
+    if (token) {
+      // If a token exists, set it in Redux and navigate to the dashboard
+      dispatch(setAuthToken(token));
+      dispatch(setAuthenticated());
+      navigate("/dashboard");
+    }
+  }, [dispatch, navigate]);
 
   const handleSubmit = async () => {
     if (!email || !password) {
@@ -24,8 +40,14 @@ const Login: React.FC = () => {
       console.log(response);
 
       if (response && response.token) {
-        localStorage.setItem("jwtToken", response.token);
+        const expirationDate = new Date();
+        expirationDate.setTime(expirationDate.getTime() + 1 * 60 * 60 * 1000); // 1 hour expiration time
 
+        const cookieString = `token=${
+          response.token
+        }; expires=${expirationDate.toUTCString()}; path=/;`;
+        document.cookie = cookieString;
+        dispatch(setAuthToken(response.token));
         dispatch(setUserData(response));
         dispatch(setAuthenticated());
         navigate("/dashboard");

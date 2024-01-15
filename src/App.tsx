@@ -21,7 +21,6 @@ function App() {
     (state: RootState) => state.User.isAuthenticated
   );
 
-  console.log(isAuthenticated, "isAtuhenticated");
   return (
     <BrowserRouter>
       <Layout>

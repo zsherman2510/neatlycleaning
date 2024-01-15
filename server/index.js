@@ -125,14 +125,8 @@ app.post("/login", async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid credentials" });
     }
-    // Remove the password field from the user object
-    delete user.dataValues.password;
 
-    const { dataValues: returnedUser } = user;
-
-    console.log(returnedUser, "returneduser");
-
-    // If authentication is successful, generate a JWT
+    // Generate a JWT
     const token = jwt.sign(
       { userId: user.id, userType },
       process.env.SECRET_KEY,
@@ -141,18 +135,17 @@ app.post("/login", async (req, res) => {
       }
     );
 
-    jwt.verify(token, process.env.SECRET_KEY, (err, decoded) => {
-      if (err) {
-        // Token is invalid or has expired
-        console.error("Token verification failed:", err);
-        res.status(401).json({ error: "Token is invalid or has expired" });
-      } else {
-        console.log("Token is valid. Decoded payload:", decoded, token);
+    // Set the JWT as an HTTP-only cookie
+    res.cookie("jwt", token, { httpOnly: true, secure: true, maxAge: 3600000 }); // Max age in milliseconds (1 hour)
 
-        const userType = decoded.userType;
-        res.json({ token, message: "Token is valid", returnedUser, userType });
-      }
-    });
+    // Remove the password field from the user object
+    delete user.dataValues.password;
+
+    const { dataValues: returnedUser } = user;
+
+    console.log(returnedUser, "returneduser");
+
+    res.json({ token, message: "Token is valid", returnedUser, userType });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ error: "Server error" });
