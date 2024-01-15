@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser } from "../../api/user";
-import { setUserData } from "../../redux/reducers/customer/user";
+import { setAuthenticated, setUserData } from "../../redux/reducers/user/user";
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("qa@gmail.com");
@@ -27,6 +27,7 @@ const Login: React.FC = () => {
         localStorage.setItem("jwtToken", response.token);
 
         dispatch(setUserData(response));
+        dispatch(setAuthenticated());
         navigate("/dashboard");
       } else {
       }

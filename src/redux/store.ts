@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import cleanerReducer from "./reducers/cleaner/createCleanerReducer";
 import createCustomerReducer from "./reducers/customer/createCustomerReducer";
-import userReducer from "./reducers/customer/user";
+import userReducer from "./reducers/user/user";
 import logger from "redux-logger";
 
 const store = configureStore({
