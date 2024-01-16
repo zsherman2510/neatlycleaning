@@ -53,13 +53,15 @@ export interface PayRateFilter {
   max: number;
 }
 
-export interface ServicesFilter {
-  bathroomCleaning: boolean;
-  carpetCleaning: boolean;
-  kitchenCleaning: boolean;
-  laundry: boolean;
-  windowCleaning: boolean;
+export interface EnumServiceItem {
+  id: number;
+  label: string;
+  key: string;
+  value: boolean;
 }
+
+export interface EnumServiceItems extends Array<EnumServiceItem> {}
+
 export interface Caregiver {
   id: string;
   name: string;

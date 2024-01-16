@@ -1,11 +1,11 @@
 import React from "react";
-import { PayRateFilter, ServicesFilter } from "../types/customer";
+import { PayRateFilter, EnumServiceItem } from "../types/customer";
 
 interface FilterSidebarProps {
   payRate: PayRateFilter;
-  services: ServicesFilter;
+  services: EnumServiceItem[];
   onPayRateChange: (value: PayRateFilter) => void;
-  onServicesChange: (service: keyof ServicesFilter, value: boolean) => void;
+  onServicesChange: (service: EnumServiceItem) => void;
 }
 
 const FilterSidebar: React.FC<FilterSidebarProps> = ({
@@ -34,11 +34,10 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
     });
   };
 
-  const handleServiceChange =
-    (service: keyof ServicesFilter) =>
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      onServicesChange(service, event.target.checked);
-    };
+  const handleServiceChange = (serviceItem: EnumServiceItem) => {
+    console.log(serviceItem, "serviceItem");
+    onServicesChange(serviceItem);
+  };
 
   return (
     <aside className="filter-sidebar">
@@ -70,18 +69,18 @@ const FilterSidebar: React.FC<FilterSidebarProps> = ({
       </div>
       <div className="filter-section">
         <h4>Can help with</h4>
-        {(Object.keys(services) as Array<keyof ServicesFilter>).map(
-          (service) => (
-            <label key={service}>
+        <div className="pill-container">
+          {services.map((serviceItem) => (
+            <label key={serviceItem.label} className="pill">
               <input
                 type="checkbox"
-                checked={services[service]}
-                onChange={handleServiceChange(service)}
+                checked={serviceItem.value}
+                onChange={() => handleServiceChange(serviceItem)}
               />
-              {service}
+              {serviceItem.label}
             </label>
-          )
-        )}
+          ))}
+        </div>
       </div>
       <button className="apply-filters">Apply filters</button>
     </aside>
