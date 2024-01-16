@@ -8,6 +8,7 @@ const CleanerDetails = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [phone, setPhone] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -61,6 +62,7 @@ const CleanerDetails = () => {
             className="input-field"
           />
         </div>
+
         <button className="care-next" onClick={handleSubmit}>
           Next
         </button>

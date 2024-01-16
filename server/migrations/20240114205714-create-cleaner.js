@@ -46,6 +46,10 @@ module.exports = {
       profilePhotoUrl: {
         type: Sequelize.STRING,
       },
+      payRate: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
       bio: {
         type: Sequelize.TEXT,
       },

@@ -49,6 +49,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING, // Store the URL of the uploaded photo
       },
 
+      payRate: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+
       // Brief Bio
       bio: {
         type: DataTypes.TEXT,

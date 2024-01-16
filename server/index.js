@@ -53,6 +53,7 @@ app.post("/cleaner/register", async (req, res) => {
       servicesOffered: req.body.cleaningServices,
       preferredServiceAreas: req.body.preferredServiceArea,
       profilePhotoUrl: req.body.profilePhotoUrl,
+      payRate: req.body.payRate,
     });
 
     // Respond with the created customer object

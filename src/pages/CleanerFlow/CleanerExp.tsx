@@ -8,6 +8,7 @@ const CleanerExperience = () => {
   const [yearsOfExperience, setYearsOfExperience] = useState<string>("");
   const [serviceOptions, setServiceOptions] = useState<string[]>([]);
   const [preferredZipCode, setPreferredZipCode] = useState<string>("");
+  const [payrate, setPayRate] = useState<string>("0");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -24,7 +25,12 @@ const CleanerExperience = () => {
 
   const handleSubmit = () => {
     // Validate and submit the experience information
-    if (!yearsOfExperience || !serviceOptions || !preferredZipCode) {
+    if (
+      !yearsOfExperience ||
+      !serviceOptions ||
+      !preferredZipCode ||
+      !payrate
+    ) {
       // Handle validation errors
       return;
     }
@@ -34,6 +40,7 @@ const CleanerExperience = () => {
       cleaningExperience: yearsOfExperience,
       cleaningServices: serviceOptions,
       preferredServiceArea: preferredZipCode,
+      payRate: payrate,
     };
     dispatch(updateCleanerDetails(experienceInfo));
 
@@ -70,6 +77,16 @@ const CleanerExperience = () => {
             id="yearsOfExperience"
             value={yearsOfExperience}
             onChange={(e) => setYearsOfExperience(e.target.value)}
+            className="input-field"
+          />
+        </div>
+        <div className="input-group">
+          <label htmlFor="phone">Minimum Pay Rate:</label>
+          <input
+            type="number"
+            id="payrate"
+            value={payrate}
+            onChange={(e) => setPayRate(e.target.value)}
             className="input-field"
           />
         </div>

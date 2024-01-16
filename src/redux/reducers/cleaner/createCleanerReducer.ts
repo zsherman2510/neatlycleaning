@@ -9,6 +9,7 @@ const initialCleanerState = {
     cleaningExperience: null,
     cleaningServices: null,
     preferredServiceArea: null,
+    payRate: null,
   },
   picture: null,
 };
