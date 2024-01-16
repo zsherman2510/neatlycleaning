@@ -383,29 +383,66 @@
   border-bottom: 1px solid #cccccc;
 }
 
-/* Filter Sidebar */
+/* FilterSidebar.css */
+
 .filter-sidebar {
+  background-color: #f7f7f7;
   width: 300px;
-  padding: 1rem;
-  border-right: 1px solid #cccccc;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
 }
 
 .filter-section {
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 }
 
-.filter-section h4 {
-  margin-bottom: 0.5rem;
+h4 {
+  font-size: 16px;
+  margin-bottom: 10px;
 }
 
-.filter-sidebar .apply-filters {
-  padding: 0.5rem 1rem;
+.range {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+label {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+.range-value {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.service-label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.apply-filters {
   background-color: #007bff;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 5px;
+  padding: 10px 20px;
   cursor: pointer;
+  font-size: 16px;
 }
+
+.apply-filters:hover {
+  background-color: #0056b3;
+}
+
 
 /* Caregiver List and Card */
 .caregiver-list {

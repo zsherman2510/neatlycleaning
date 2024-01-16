@@ -19,9 +19,9 @@ const Login: React.FC = () => {
   useEffect(() => {
     const token = getCookie("token"); // Get the token from cookies
     const userDataFromCookie = getCookie("userData");
-
     if (userDataFromCookie) {
       const userData = JSON.parse(decodeURIComponent(userDataFromCookie));
+      console.log(userData, "userData");
       dispatch(setUserData(userData));
     }
     if (token) {
@@ -52,12 +52,16 @@ const Login: React.FC = () => {
           response.token
         }; expires=${expirationDate.toUTCString()}; path=/;`;
         document.cookie = cookieString;
-
-        const localUserData = JSON.stringify(response.returnedUser);
+        const { userType, returnedUser, token } = response;
+        const userData = {
+          ...returnedUser,
+          userType,
+        };
+        const localUserData = JSON.stringify(userData);
         document.cookie = `userData=${encodeURIComponent(
           localUserData
         )}; expires=${expirationDate.toUTCString()}; path=/`;
-        dispatch(setAuthToken(response.token));
+        dispatch(setAuthToken(token));
         dispatch(setUserData(response));
         dispatch(setAuthenticated());
         navigate("/dashboard");

@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import SearchHeader from "../../components/SearchHeader";
 import ServiceSelectionBar from "../../components/ServiceSelectionBar";
-import SearchResultHeader from "../../components/SearchResultHeader";
 import FilterSidebar from "../../components/FilterSidebar";
 import CaregiverList from "../../components/CaregiverList";
 import CustomerJobs from "../../components/CustomerJobs"; // Import the component for customer jobs
@@ -49,14 +47,9 @@ const FindCare: React.FC = () => {
 
   return (
     <div className="main-layout">
-      <SearchHeader />
       <ServiceSelectionBar
         selectedService={""} // You would manage this state and pass the selected service
         onSelectService={() => {}} // You would implement this handler
-      />
-      <SearchResultHeader
-        searchQuery={""} // You would manage this state and pass the search query
-        onSearchChange={() => {}} // You would implement this handler
       />
       <div className="content">
         <FilterSidebar
