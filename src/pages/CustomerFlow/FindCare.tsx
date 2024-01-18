@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ServiceSelectionBar from "../../components/ServiceSelectionBar";
 import FilterSidebar from "../../components/FilterSidebar";
@@ -8,8 +8,10 @@ import {
   Caregiver,
   PayRateFilter,
   EnumServiceItem,
+  Job,
 } from "../../types/customer";
 import { selectUserType } from "../../redux/reducers/user/user";
+import { getCareGivers, getJobs } from "../../api/user";
 
 const initialPayRate: PayRateFilter = { min: 14, max: 50 };
 const options = [
@@ -24,8 +26,34 @@ const FindCare: React.FC = () => {
   const [payRate, setPayRate] = useState<PayRateFilter>(initialPayRate);
   const [services, setServices] = useState<EnumServiceItem[]>(options);
   const [caregivers, setCaregivers] = useState<Caregiver[]>([]);
-
+  const [jobs, setJobs] = useState<Job[]>([]);
   const userType = useSelector(selectUserType); // Determine the user type (caregiver or customer)
+  console.log(userType, "userType");
+  useEffect(() => {
+    const fetchCaregivers = async () => {
+      try {
+        const response = await getCareGivers(); // Assuming this function returns the caregivers
+        setCaregivers(response); // Update the caregivers state with the fetched data
+      } catch (error) {
+        console.error("Error fetching caregivers:", error);
+      }
+    };
+
+    const fetchJobs = async () => {
+      try {
+        const response = await getJobs();
+        setJobs(response);
+      } catch (e) {
+        console.error("Error fetching Jobs", e);
+      }
+    };
+
+    if (userType === "customer") {
+      fetchCaregivers(); // Fetch caregivers when the component mounts
+    } else {
+      fetchJobs();
+    }
+  }, [userType]);
 
   const handlePayRateChange = (updatedPayRate: PayRateFilter) => {
     setPayRate(updatedPayRate);
@@ -33,7 +61,6 @@ const FindCare: React.FC = () => {
   };
 
   const handleServicesChange = (service: EnumServiceItem) => {
-    console.log(service, "service");
     const updatedServices = services.map((item) =>
       item.label === service.label
         ? { ...item, value: !item.value } // Toggle the value property
@@ -61,7 +88,7 @@ const FindCare: React.FC = () => {
         {userType === "customer" ? (
           <CaregiverList caregivers={caregivers} />
         ) : (
-          <CustomerJobs /> // Display different content for customers
+          <CustomerJobs jobs={jobs} /> // Display different content for customers
         )}
       </div>
     </div>

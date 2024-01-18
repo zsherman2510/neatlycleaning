@@ -70,3 +70,35 @@ export const loginUser = async (email: string, password: string) => {
     throw error; // If you want the error to be propagated to the caller
   }
 };
+
+export const getCareGivers = async () => {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/getCaregivers`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (error: any) {
+    throw error;
+  }
+};
+
+export const getJobs = async () => {
+  try {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/getJobs`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await res.json();
+
+    return data;
+  } catch (e: any) {}
+};

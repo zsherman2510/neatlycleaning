@@ -61,11 +61,17 @@ export interface EnumServiceItem {
 }
 
 export interface EnumServiceItems extends Array<EnumServiceItem> {}
-
 export interface Caregiver {
   id: string;
-  name: string;
-  location: string;
-  rate: number;
-  photoUrl: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+  yearsOfExperience: number;
+  servicesOffered: string[]; // Assuming servicesOffered is an array of service names
+  preferredServiceAreas: string[]; // Assuming preferredServiceAreas is an array of area names
+  profilePhotoUrl: string | undefined; // Allow for null profile photo URL
+  payRate: string; // You can use a string or number based on your requirements
+  bio: string | null; // Allow for null bio
 }

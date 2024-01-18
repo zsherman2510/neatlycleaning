@@ -153,6 +153,26 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/getCaregivers", async (req, res) => {
+  try {
+    const cleaners = await Cleaner.findAll(); // Retrieve all cleaners from the database
+    res.status(200).json(cleaners); // Respond with the cleaners in JSON format
+  } catch (error) {
+    console.error("Error fetching cleaners:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/getJobs", async (req, res) => {
+  try {
+    const jobs = await Jobs.findAll(); // Retrieve all cleaners from the database
+    res.status(200).json(jobs); // Respond with the cleaners in JSON format
+  } catch (error) {
+    console.error("Error fetching cleaners:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
